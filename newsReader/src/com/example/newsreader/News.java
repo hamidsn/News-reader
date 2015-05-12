@@ -1,4 +1,5 @@
 package com.example.newsreader;
+// created by h_sedghy
 
 import com.google.gson.annotations.SerializedName;
 public class News {
@@ -17,7 +18,6 @@ public class News {
     }
 
     public String getTitle() {
-    	//if(title == null) return "nnull";
         return title;
     }
 
@@ -26,7 +26,6 @@ public class News {
     }
 
     public String getImageHref() {
-    	//if(imageHref == null) return "nnull";
         return imageHref;
     }
 
@@ -35,7 +34,6 @@ public class News {
     }
 
 	public String getDescription() {
-    	//if(description == null) return "nnull";
         return description;
     }
 

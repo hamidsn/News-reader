@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -40,9 +41,10 @@ public class MainActivity extends Activity {
 		myListView = (ListView) findViewById(R.id.list);
 		getActionBar().setTitle(getString(R.string.app_name));
 		context = getApplicationContext();
-		Display display = getWindowManager().getDefaultDisplay(); 
-		width = display.getWidth();  // deprecated
-		
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		width = displaymetrics.widthPixels;
+
 		init();
 		title = new ArrayList<String>();
 		description = new ArrayList<String>();
@@ -50,7 +52,9 @@ public class MainActivity extends Activity {
 		if (isConnected()) {
 			new asyncConvert().execute();
 		} else {
-			Toast.makeText(context, getResources().getString(R.string.lost_connection), Toast.LENGTH_SHORT).show();
+			Toast.makeText(context,
+					getResources().getString(R.string.lost_connection),
+					Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -63,7 +67,7 @@ public class MainActivity extends Activity {
 		}
 		progressDialog = null;
 	}
-	
+
 	private void init() {
 		FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
 				.withDrawable(getResources().getDrawable(R.drawable.refreshme))
@@ -77,8 +81,9 @@ public class MainActivity extends Activity {
 				if (isConnected()) {
 					refresh();
 				} else {
-					Toast.makeText(context, getResources().getString(R.string.lost_connection), Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(context,
+							getResources().getString(R.string.lost_connection),
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -99,15 +104,15 @@ public class MainActivity extends Activity {
 			super.onPreExecute();
 			progressDialog = new ProgressDialog(MainActivity.this);
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage(getResources().getString(R.string.loading));
+			progressDialog.setMessage(getResources()
+					.getString(R.string.loading));
 			progressDialog.show();
 		}
 
 		@Override
 		protected Void doInBackground(Void... voids) {
 
-			Reader reader = API
-					.getData(getResources().getString(R.string.url));
+			Reader reader = API.getData(getResources().getString(R.string.url));
 			newsSubject = new GsonBuilder().create().fromJson(reader,
 					NewsSubject.class);
 			actionBarTitle = newsSubject.getTitle();
@@ -128,7 +133,7 @@ public class MainActivity extends Activity {
 			}
 
 			CustomListAdapter adapter = new CustomListAdapter(
-					MainActivity.this, title,  imageHref, description);
+					MainActivity.this, title, imageHref, description);
 
 			getActionBar().setTitle(actionBarTitle);
 			myListView.setAdapter(adapter);
