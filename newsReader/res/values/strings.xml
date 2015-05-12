@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">newsReader</string>
+    <string name="url">https://dl.dropboxusercontent.com/u/746330/facts.json</string>
+    <string name="action_settings">Settings</string>
+    <string name="lost_connection">No connection</string>
+	<string name="loading">Loading...</string>
+</resources>
